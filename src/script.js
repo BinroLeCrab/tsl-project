@@ -4,6 +4,9 @@ import * as THREE from 'three/webgpu'
 import BaseObject from './object/baseObject'
 import Ground from './object/ground'
 import Sword from './object/sword'
+import { pass } from 'three/tsl'
+import { bloom } from 'three/examples/jsm/tsl/display/BloomNode.js'
+import settingsPane from './tools/Pane'
 
 /**
  * Base
@@ -109,6 +112,59 @@ const ambientLight = new THREE.AmbientLight(0x859dff, 1)
 scene.add(ambientLight)
 
 /**
+ * Post-processing
+ */
+const renderPipeline = new THREE.RenderPipeline(renderer)
+
+const scenePass = pass(scene, camera)
+
+const sceneOutput = scenePass.getTextureNode('output')
+
+// Bloom pass
+const bloomSettings = {
+    strength: 0.45,
+    radius: 0.7,
+    threshold: 0.7,
+};
+
+const bloomPass = bloom(sceneOutput, bloomSettings.strength, bloomSettings.radius, bloomSettings.threshold)
+const bloomOutput = sceneOutput.add(bloomPass)
+
+renderPipeline.outputNode = bloomOutput;
+
+const bloomFolder = settingsPane.addFolder({
+    title: "Bloom",
+    expanded: false,
+});
+
+bloomFolder.addBinding(bloomSettings, "strength", {
+    min: 0,
+    max: 2,
+    step: 0.01,
+    label: "strength",
+}).on("change", (event) => {
+    bloomPass.strength.value = event.value;
+});
+
+bloomFolder.addBinding(bloomSettings, "radius", {
+    min: 0,
+    max: 1,
+    step: 0.01,
+    label: "radius"
+}).on("change", (event) => {
+    bloomPass.radius.value = event.value;
+});
+
+bloomFolder.addBinding(bloomSettings, "threshold", {
+    min: 0,
+    max: 1,
+    step: 0.01,
+    label: "threshold",
+}).on("change", (event) => {
+    bloomPass.threshold.value = event.value;
+});
+
+/**
  * Animate
  */
 const timer = new THREE.Timer()
@@ -125,7 +181,8 @@ const tick = () =>
     controls.update()
 
     // Render
-    renderer.render(scene, camera)
+    // renderer.render(scene, camera)
+    renderPipeline.render()
 }
 
 renderer.setAnimationLoop(tick)
