@@ -56,15 +56,15 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 5
-camera.position.y = 4.5
-camera.position.z = 2.5
+camera.position.x = 0
+camera.position.y = 1
+camera.position.z = 5
 scene.add(camera)
 
 // Controls
-const controls = new OrbitControls(camera, canvas)
-controls.target.set(0, 1, 0)
-controls.enableDamping = true
+// const controls = new OrbitControls(camera, canvas)
+// controls.target.set(0, 1, 0)
+// controls.enableDamping = true
 
 /**
  * Renderer
@@ -83,10 +83,12 @@ const baseObject = new BaseObject(1);
 // scene.add(baseObject)
 
 const ground = new Ground(10);
-scene.add(ground)
+// scene.add(ground)
 
 const sword = new Sword(1);
 scene.add(sword)
+
+camera.lookAt(sword.position)
 
 /**
  * Lights
@@ -118,11 +120,10 @@ const tick = () =>
     timer.update()
     const delta = timer.getDelta()
 
-    if(delta > 0.1)
-        console.log(delta)
+    sword.tick(timer);
 
     // Update controls
-    controls.update()
+    // controls.update()
 
     // Render
     renderer.render(scene, camera)
