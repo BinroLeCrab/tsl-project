@@ -3,6 +3,7 @@ import { RGBELoader } from 'three/addons/loaders/RGBELoader.js'
 import * as THREE from 'three/webgpu'
 import BaseObject from './object/baseObject'
 import Ground from './object/ground'
+import Sword from './object/sword'
 
 /**
  * Base
@@ -79,10 +80,13 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setClearColor(0x859dff)
 
 const baseObject = new BaseObject(1);
-scene.add(baseObject)
+// scene.add(baseObject)
 
 const ground = new Ground(10);
 scene.add(ground)
+
+const sword = new Sword(1);
+scene.add(sword)
 
 /**
  * Lights
