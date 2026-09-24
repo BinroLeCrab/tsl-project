@@ -1,4 +1,5 @@
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js'
 import * as THREE from 'three/webgpu'
 import BaseObject from './object/baseObject'
 import Ground from './object/ground'
@@ -11,6 +12,17 @@ const canvas = document.querySelector('canvas.threejs')
 
 // Scene
 const scene = new THREE.Scene()
+
+// Environement map
+const rgbeLoader = new RGBELoader()
+
+rgbeLoader.load('./sky_environnement.hdr', (environmentMap) => {
+    environmentMap.mapping = THREE.EquirectangularReflectionMapping
+
+    scene.environment = environmentMap
+    scene.background = environmentMap
+    scene.environmentIntensity = 0.8
+})
 
 // Loaders
 const textureLoader = new THREE.TextureLoader()

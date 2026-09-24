@@ -2,7 +2,7 @@ import basicSsl from '@vitejs/plugin-basic-ssl'
 
 export default {
     root: 'src/', // Sources files (typically where index.html is)
-    publicDir: '../static/', // Path from "root" to static assets (files that are served as they are)
+    publicDir: '../public/', // Path from "root" to static assets (files that are served as they are)
     server:
     {
         open: true,

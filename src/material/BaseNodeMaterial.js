@@ -2,7 +2,7 @@ import { color, mix, normalView, sin, time, vec3 } from "three/tsl";
 import * as THREE from "three/webgpu";
 import { fresnel } from "../shaders/fragmentShaders";
 
-class BaseNodeMaterial extends THREE.MeshBasicNodeMaterial {
+class BaseNodeMaterial extends THREE.MeshStandardNodeMaterial {
 	constructor(parameters) {
 		super(parameters);
 
@@ -13,7 +13,7 @@ class BaseNodeMaterial extends THREE.MeshBasicNodeMaterial {
 		);
 
 		this.colorNode = fresnel(baseColor);
-        this.emissiveNode = 1.0;
+        this.emissiveNode = this.colorNode;
 	}
 }
 
