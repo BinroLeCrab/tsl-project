@@ -20,10 +20,10 @@ import {
     vec3,
 } from "three/tsl";
 
-export const fresnel = Fn(({baseColor, secondaryColor = color("#ffffff")}) => {
+export const fresnel = Fn(({baseColor, secondaryColor = color("#ffffff"), power = 2.0}) => {
 	// const coords = uv();
 
-	const fresnelFactor = normalView.z.oneMinus().pow(2);
+	const fresnelFactor = normalView.z.oneMinus().pow(power);
 	
 
 	const color = mix(baseColor, secondaryColor, fresnelFactor);

@@ -1,6 +1,9 @@
 import * as THREE from "three/webgpu";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import swordMaterial from "../material/SwordMaterial";
+import baseNodeMaterial from "../material/BaseNodeMaterial";
+import settingsPane from "../tools/Pane";
+import magicSwordMaterial from "../material/MagicSwordMaterial";
 
 const loader = new GLTFLoader();
 
@@ -10,10 +13,15 @@ export default class Sword extends THREE.Group {
 
 		this.scale.set(size, size, size);
 
-		loader.load("/sword.glb", (gltf) => {
-			const object = gltf.scene;
+        this.swordGroup = new THREE.Group();
+        this.add(this.swordGroup);
 
-			object.traverse((child) => {
+        this.baseSword = new THREE.Group();
+
+		loader.load("/sword.glb", (gltf) => {
+			this.baseSword = gltf.scene;
+
+			this.baseSword.traverse((child) => {
 				if (!child.isMesh) return;
 
 				swordMaterial.setOriginalMaterial(child.material);
@@ -23,7 +31,9 @@ export default class Sword extends THREE.Group {
 				child.receiveShadow = true;
 			});
 
-			this.add(object);
+			this.swordGroup.add(this.baseSword);
+
+            this.addOuterSword();
 		});
 
 		this.position.set(0, 2, 0);
@@ -35,9 +45,55 @@ export default class Sword extends THREE.Group {
             speed: 1,
             amplitude: 0.1,
         }
+
+        this.swordFolder = settingsPane.addFolder({
+            title: "Sword",
+        });
+
 	}
 
+    addOuterSword() {
+        this.outerSword = this.baseSword.clone();
+        this.outerSword.traverse((child) => {
+            if (!child.isMesh) return;
+
+            child.material = magicSwordMaterial;
+        });
+
+        this.outerSword.scale.set(1.5, 1, 1.65);
+        this.swordGroup.add(this.outerSword);
+
+        console.log(this.outerSword.scale);
+
+        this.outerSwordFolder = this.swordFolder.addFolder({
+            title: "outerSword",
+            expanded: false,
+        });
+
+        this.outerSwordFolder.addBinding(this.outerSword.scale, "x", {
+            min: 1,
+            max: 2,
+            step: 0.01,
+            label: "Scale X",
+        });
+
+        this.outerSwordFolder.addBinding(this.outerSword.scale, "y", {
+            min: 1,
+            max: 2,
+            step: 0.01,
+            label: "Scale Y",
+        });
+
+        this.outerSwordFolder.addBinding(this.outerSword.scale, "z", {
+            min: 1,
+            max: 2,
+            step: 0.01,
+            label: "Scale Z",
+        });
+    }
+
 	tick = (timer) => {
-		this.position.y = Math.sin(timer.getElapsed() * this.animation.speed) * this.animation.amplitude + this.initialPosition.y;
+		this.swordGroup.position.y = Math.sin(timer.getElapsed() * this.animation.speed) * this.animation.amplitude;
+        this.swordGroup.rotation.y += this.animation.speed * 0.01;
 	};
 }
