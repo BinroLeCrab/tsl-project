@@ -4,9 +4,10 @@ import * as THREE from 'three/webgpu'
 import BaseObject from './object/baseObject'
 import Ground from './object/ground'
 import Sword from './object/sword'
-import { pass } from 'three/tsl'
+import { pass, uniform } from 'three/tsl'
 import { bloom } from 'three/examples/jsm/tsl/display/BloomNode.js'
 import settingsPane from './tools/Pane'
+import { film } from 'three/examples/jsm/tsl/display/FilmNode.js'
 
 /**
  * Base
@@ -122,7 +123,7 @@ const sceneOutput = scenePass.getTextureNode('output')
 
 // Bloom pass
 const bloomSettings = {
-    strength: 0.45,
+    strength: 0.15,
     radius: 0.7,
     threshold: 0.7,
 };
@@ -130,7 +131,6 @@ const bloomSettings = {
 const bloomPass = bloom(sceneOutput, bloomSettings.strength, bloomSettings.radius, bloomSettings.threshold)
 const bloomOutput = sceneOutput.add(bloomPass)
 
-renderPipeline.outputNode = bloomOutput;
 
 const bloomFolder = settingsPane.addFolder({
     title: "Bloom",
@@ -163,6 +163,32 @@ bloomFolder.addBinding(bloomSettings, "threshold", {
 }).on("change", (event) => {
     bloomPass.threshold.value = event.value;
 });
+
+// Film pass
+
+const filmSettings = {
+    intensity: 1.09,
+};
+
+const filmIntensity = uniform(filmSettings.intensity);
+
+const filmPass = film(bloomOutput, filmIntensity);
+
+const filmFolder = settingsPane.addFolder({
+    title: "Film",
+    expanded: false,
+});
+
+filmFolder.addBinding(filmSettings, "intensity", {
+    min: 0,
+    max: 5,
+    step: 0.01,
+    label: "Intensity",
+}).on("change", (event) => {
+    filmIntensity.value = event.value;
+});
+
+renderPipeline.outputNode = filmPass;
 
 /**
  * Animate
