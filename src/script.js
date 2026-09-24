@@ -8,6 +8,7 @@ import { pass, uniform } from 'three/tsl'
 import { bloom } from 'three/examples/jsm/tsl/display/BloomNode.js'
 import settingsPane from './tools/Pane'
 import { film } from 'three/examples/jsm/tsl/display/FilmNode.js'
+import interactionRaycaster from './tools/InteractionRaycaster'
 
 /**
  * Base
@@ -78,6 +79,10 @@ renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setClearColor(0x859dff)
 
+/**
+ * Objects
+ */
+
 const baseObject = new BaseObject(1);
 // scene.add(baseObject)
 
@@ -86,6 +91,13 @@ const ground = new Ground(10);
 
 const sword = new Sword(1);
 scene.add(sword)
+
+/**
+ * Raycaster
+ */
+interactionRaycaster.init(camera, renderer.domElement);
+interactionRaycaster.add(sword);
+
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
@@ -205,6 +217,7 @@ const tick = () =>
 
     // Update controls
     controls.update()
+    interactionRaycaster.update()
 
     // Render
     // renderer.render(scene, camera)

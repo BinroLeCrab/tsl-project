@@ -11,6 +11,8 @@ export default class Sword extends THREE.Group {
 	constructor(size = 1) {
 		super();
 
+        this.isHovered = false
+
 		this.scale.set(size, size, size);
 
         this.swordGroup = new THREE.Group();
@@ -90,6 +92,31 @@ export default class Sword extends THREE.Group {
             step: 0.01,
             label: "Scale Z",
         });
+    }
+
+    isHover(isHovered, event) {
+        if (this.isHovered === isHovered) return
+
+        this.isHovered = isHovered
+
+        if (isHovered) {
+            console.log("La souris est au-dessus de l'épée")
+
+            // Exemple :
+            // this.outerSword.scale.setScalar(1.1)
+        } else {
+            console.log("La souris quitte l'épée")
+
+            // Exemple :
+            // this.outerSword.scale.setScalar(1)
+        }
+    }
+
+    isClicked() {
+        console.log("L'épée est cliquée")
+
+        // Exemple :
+        // this.rotation.y += Math.PI
     }
 
 	tick = (timer) => {
