@@ -61,11 +61,6 @@ camera.position.y = 1
 camera.position.z = 5
 scene.add(camera)
 
-// Controls
-// const controls = new OrbitControls(camera, canvas)
-// controls.target.set(0, 1, 0)
-// controls.enableDamping = true
-
 /**
  * Renderer
  */
@@ -88,7 +83,11 @@ const ground = new Ground(10);
 const sword = new Sword(1);
 scene.add(sword)
 
-camera.lookAt(sword.position)
+// Controls
+const controls = new OrbitControls(camera, canvas)
+controls.target.set(sword.position.x, sword.position.y, sword.position.z)
+controls.enableDamping = true
+// camera.lookAt(sword.position)
 
 /**
  * Lights
@@ -123,7 +122,7 @@ const tick = () =>
     sword.tick(timer);
 
     // Update controls
-    // controls.update()
+    controls.update()
 
     // Render
     renderer.render(scene, camera)
