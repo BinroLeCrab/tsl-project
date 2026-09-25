@@ -14,13 +14,15 @@ import {
 import * as THREE from "three/webgpu";
 import { fresnel } from "../shaders/fragmentShaders";
 import settingsPane from "../tools/Pane";
+import { wave } from "../shaders/vertexShaders";
+import swordMaterial from "./SwordMaterial";
 
 class MagicSwordMaterial extends THREE.MeshStandardNodeMaterial {
 	constructor(parameters) {
 		super(parameters);
 
 		this.settings = {
-			fresnelPower: 2.0,
+			fresnelPower: 1.2,
 		};
 
 		//tourne les positionGeometry de 45deg
@@ -47,7 +49,11 @@ class MagicSwordMaterial extends THREE.MeshStandardNodeMaterial {
 
 		this.fresnelPower = uniform(this.settings.fresnelPower);
 
-		this.colorNode = fresnel(baseColor, normalView, this.fresnelPower);
+		this.colorNode = fresnel({
+			baseColor: baseColor,
+			secondaryColor: normalView,
+			power: this.fresnelPower
+		});
 		// this.colorNode = ;
 		this.emissiveNode = this.colorNode;
 		this.transparent = true;
@@ -66,10 +72,28 @@ class MagicSwordMaterial extends THREE.MeshStandardNodeMaterial {
 			min: 0.1,
 			max: 10,
 			step: 0.1,
-			label: "Fresnel power",
-			onChange: (event) => {
-				this.fresnelPower.value = event.value;
-			},
+			label: "Fresnel power"
+		}).on("change", (event) => {
+			this.fresnelPower.value = event.value;
+		});
+	}
+
+	setWave(waveDuration = uniform(1)) {
+		this.waveFrequency = uniform(swordMaterial.waveParameters.frequency);
+		this.waveSpeed = uniform(swordMaterial.waveParameters.speed);
+		this.waveAmplitude = uniform(swordMaterial.waveParameters.amplitude);
+
+		this.positionNode = wave({
+			axis: "y",
+			axis2: "z",
+			frequency: this.waveFrequency,
+			speed: this.waveSpeed,
+			amplitude: this.waveAmplitude,
+			duration: waveDuration,
+		});
+
+		const swordMaterialFolder = settingsPane.addFolder({
+			title: "Sword Material",
 		});
 	}
 }

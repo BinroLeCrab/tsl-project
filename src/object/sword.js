@@ -4,6 +4,7 @@ import swordMaterial from "../material/SwordMaterial";
 import baseNodeMaterial from "../material/BaseNodeMaterial";
 import settingsPane from "../tools/Pane";
 import magicSwordMaterial from "../material/MagicSwordMaterial";
+import { uniform } from "three/tsl";
 
 const loader = new GLTFLoader();
 
@@ -12,6 +13,7 @@ export default class Sword extends THREE.Group {
 		super();
 
         this.isHovered = false
+        this.WaveTimeLife = uniform(0);
 
 		this.scale.set(size, size, size);
 
@@ -27,6 +29,7 @@ export default class Sword extends THREE.Group {
 				if (!child.isMesh) return;
 
 				swordMaterial.setOriginalMaterial(child.material);
+                swordMaterial.setWave(this.WaveTimeLife);
 
 				child.material = swordMaterial;
 				child.castShadow = true;
@@ -59,13 +62,12 @@ export default class Sword extends THREE.Group {
         this.outerSword.traverse((child) => {
             if (!child.isMesh) return;
 
+            magicSwordMaterial.setWave(this.WaveTimeLife);
             child.material = magicSwordMaterial;
         });
 
         this.outerSword.scale.set(1.5, 1, 1.65);
         this.swordGroup.add(this.outerSword);
-
-        console.log(this.outerSword.scale);
 
         this.outerSwordFolder = this.swordFolder.addFolder({
             title: "outerSword",
@@ -115,12 +117,21 @@ export default class Sword extends THREE.Group {
     isClicked() {
         console.log("L'épée est cliquée")
 
+        this.WaveTimeLife.value = 1;
+
         // Exemple :
         // this.rotation.y += Math.PI
     }
 
 	tick = (timer) => {
+
+        const delta = timer.getDelta();
+
 		this.swordGroup.position.y = Math.sin(timer.getElapsed() * this.animation.speed) * this.animation.amplitude;
         this.swordGroup.rotation.y += this.animation.speed * 0.01;
+
+        if (this.WaveTimeLife.value > 0) {
+            this.WaveTimeLife.value -= delta * 0.5; 
+        }
 	};
 }
