@@ -146,37 +146,37 @@ const bloomPass = bloom(sceneOutput, bloomSettings.strength, bloomSettings.radiu
 const bloomOutput = sceneOutput.add(bloomPass)
 
 
-const bloomFolder = settingsPane.addFolder({
-    title: "Bloom",
-    expanded: false,
-});
+// const bloomFolder = settingsPane.addFolder({
+//     title: "Bloom",
+//     expanded: false,
+// });
 
-bloomFolder.addBinding(bloomSettings, "strength", {
-    min: 0,
-    max: 2,
-    step: 0.01,
-    label: "strength",
-}).on("change", (event) => {
-    bloomPass.strength.value = event.value;
-});
+// bloomFolder.addBinding(bloomSettings, "strength", {
+//     min: 0,
+//     max: 2,
+//     step: 0.01,
+//     label: "strength",
+// }).on("change", (event) => {
+//     bloomPass.strength.value = event.value;
+// });
 
-bloomFolder.addBinding(bloomSettings, "radius", {
-    min: 0,
-    max: 1,
-    step: 0.01,
-    label: "radius"
-}).on("change", (event) => {
-    bloomPass.radius.value = event.value;
-});
+// bloomFolder.addBinding(bloomSettings, "radius", {
+//     min: 0,
+//     max: 1,
+//     step: 0.01,
+//     label: "radius"
+// }).on("change", (event) => {
+//     bloomPass.radius.value = event.value;
+// });
 
-bloomFolder.addBinding(bloomSettings, "threshold", {
-    min: 0,
-    max: 1,
-    step: 0.01,
-    label: "threshold",
-}).on("change", (event) => {
-    bloomPass.threshold.value = event.value;
-});
+// bloomFolder.addBinding(bloomSettings, "threshold", {
+//     min: 0,
+//     max: 1,
+//     step: 0.01,
+//     label: "threshold",
+// }).on("change", (event) => {
+//     bloomPass.threshold.value = event.value;
+// });
 
 // rgb shift pass
 
@@ -190,28 +190,28 @@ const rgbShiftAngle = uniform(rgbShiftSettings.angle);
 
 const shiftPass = rgbShift(bloomOutput, rgbShiftAmount, rgbShiftAngle);
 
-const rgbShiftFolder = settingsPane.addFolder({
-    title: "RGB Shift",
-    expanded: false,
-});
+// const rgbShiftFolder = settingsPane.addFolder({
+//     title: "RGB Shift",
+//     expanded: false,
+// });
 
-rgbShiftFolder.addBinding(rgbShiftSettings, "amount", {
-    min: 0,
-    max: 0.1,
-    step: 0.001,
-    label: "Amount",
-}).on("change", (event) => {
-    rgbShiftAmount.value = event.value;
-});
+// rgbShiftFolder.addBinding(rgbShiftSettings, "amount", {
+//     min: 0,
+//     max: 0.1,
+//     step: 0.001,
+//     label: "Amount",
+// }).on("change", (event) => {
+//     rgbShiftAmount.value = event.value;
+// });
 
-rgbShiftFolder.addBinding(rgbShiftSettings, "angle", {
-    min: -Math.PI,
-    max: Math.PI,
-    step: 0.01,
-    label: "Angle",
-}).on("change", (event) => {
-    rgbShiftAngle.value = event.value;
-});
+// rgbShiftFolder.addBinding(rgbShiftSettings, "angle", {
+//     min: -Math.PI,
+//     max: Math.PI,
+//     step: 0.01,
+//     label: "Angle",
+// }).on("change", (event) => {
+//     rgbShiftAngle.value = event.value;
+// });
 
 // Film pass
 
@@ -223,19 +223,19 @@ const filmIntensity = uniform(filmSettings.intensity);
 
 const filmPass = film(shiftPass, filmIntensity);
 
-const filmFolder = settingsPane.addFolder({
-    title: "Film",
-    expanded: false,
-});
+// const filmFolder = settingsPane.addFolder({
+//     title: "Film",
+//     expanded: false,
+// });
 
-filmFolder.addBinding(filmSettings, "intensity", {
-    min: 0,
-    max: 5,
-    step: 0.01,
-    label: "Intensity",
-}).on("change", (event) => {
-    filmIntensity.value = event.value;
-});
+// filmFolder.addBinding(filmSettings, "intensity", {
+//     min: 0,
+//     max: 5,
+//     step: 0.01,
+//     label: "Intensity",
+// }).on("change", (event) => {
+//     filmIntensity.value = event.value;
+// });
 
 renderPipeline.outputNode = filmPass;
 

@@ -15,9 +15,9 @@ export default class Sword extends THREE.Group {
 	constructor(size = 1) {
 		super();
 
-        this.swordFolder = settingsPane.addFolder({
-            title: "Sword",
-        });
+        // this.swordFolder = settingsPane.addFolder({
+        //     title: "Sword",
+        // });
 
         this.isHovered = false
         this.WaveTimeLife = uniform(0);
@@ -50,52 +50,52 @@ export default class Sword extends THREE.Group {
         this.sun.rotation.x = 0.26;
         this.add(this.sun);
 
-        this.sunFolder = this.swordFolder.addFolder({
-            title: "Sun",
-            expanded: false,
-        });
+        // this.sunFolder = this.swordFolder.addFolder({
+        //     title: "Sun",
+        //     expanded: false,
+        // });
 
-        this.sunFolder.addBinding(this.sun.position, "x", {
-            min: -5,
-            max: 5,
-            step: 0.01,
-            label: "Position X",
-        });
+        // this.sunFolder.addBinding(this.sun.position, "x", {
+        //     min: -5,
+        //     max: 5,
+        //     step: 0.01,
+        //     label: "Position X",
+        // });
 
-        this.sunFolder.addBinding(this.sun.position, "y", {
-            min: -5,
-            max: 5,
-            step: 0.01,
-            label: "Position Y",
-        });
+        // this.sunFolder.addBinding(this.sun.position, "y", {
+        //     min: -5,
+        //     max: 5,
+        //     step: 0.01,
+        //     label: "Position Y",
+        // });
         
-        this.sunFolder.addBinding(this.sun.position, "z", {
-            min: -5,
-            max: 5,
-            step: 0.01,
-            label: "Position Z",
-        });
+        // this.sunFolder.addBinding(this.sun.position, "z", {
+        //     min: -5,
+        //     max: 5,
+        //     step: 0.01,
+        //     label: "Position Z",
+        // });
 
-        this.sunFolder.addBinding(this.sun.rotation, "x", {
-            min: 0,
-            max: Math.PI * 2,
-            step: 0.01,
-            label: "Rotation X",
-        });
+        // this.sunFolder.addBinding(this.sun.rotation, "x", {
+        //     min: 0,
+        //     max: Math.PI * 2,
+        //     step: 0.01,
+        //     label: "Rotation X",
+        // });
 
-        this.sunFolder.addBinding(this.sun.rotation, "y", {
-            min: 0,
-            max: Math.PI * 2,
-            step: 0.01,
-            label: "Rotation Y",
-        });
+        // this.sunFolder.addBinding(this.sun.rotation, "y", {
+        //     min: 0,
+        //     max: Math.PI * 2,
+        //     step: 0.01,
+        //     label: "Rotation Y",
+        // });
 
-        this.sunFolder.addBinding(this.sun.rotation, "z", {
-            min: 0,
-            max: Math.PI * 2,
-            step: 0.01,
-            label: "Rotation Z",
-        });
+        // this.sunFolder.addBinding(this.sun.rotation, "z", {
+        //     min: 0,
+        //     max: Math.PI * 2,
+        //     step: 0.01,
+        //     label: "Rotation Z",
+        // });
     }
 
     setupSwordGroup() {

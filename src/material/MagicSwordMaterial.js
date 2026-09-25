@@ -64,18 +64,18 @@ class MagicSwordMaterial extends THREE.MeshStandardNodeMaterial {
 		);
 		this.side = THREE.DoubleSide;
 
-		this.paneFolder = settingsPane.addFolder({
-			title: "Magic sword material",
-		});
+		// this.paneFolder = settingsPane.addFolder({
+		// 	title: "Magic sword material",
+		// });
 
-		this.paneFolder.addBinding(this.settings, "fresnelPower", {
-			min: 0.1,
-			max: 10,
-			step: 0.1,
-			label: "Fresnel power"
-		}).on("change", (event) => {
-			this.fresnelPower.value = event.value;
-		});
+		// this.paneFolder.addBinding(this.settings, "fresnelPower", {
+		// 	min: 0.1,
+		// 	max: 10,
+		// 	step: 0.1,
+		// 	label: "Fresnel power"
+		// }).on("change", (event) => {
+		// 	this.fresnelPower.value = event.value;
+		// });
 	}
 
 	setWave(waveDuration = uniform(1)) {
@@ -90,10 +90,6 @@ class MagicSwordMaterial extends THREE.MeshStandardNodeMaterial {
 			speed: this.waveSpeed,
 			amplitude: this.waveAmplitude,
 			duration: waveDuration,
-		});
-
-		const swordMaterialFolder = settingsPane.addFolder({
-			title: "Sword Material",
 		});
 	}
 }

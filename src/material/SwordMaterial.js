@@ -60,42 +60,42 @@ class SwordMaterial extends THREE.MeshStandardNodeMaterial {
 			duration: waveDuration,
 		});
 
-		const swordMaterialFolder = settingsPane.addFolder({
-			title: "Sword Material",
-		});
+		// const swordMaterialFolder = settingsPane.addFolder({
+		// 	title: "Sword Material",
+		// });
 
-		swordMaterialFolder
-			.addBinding(this.waveParameters, "frequency", {
-				min: 0,
-				max: 10,
-				step: 0.1,
-				label: "Wave frequency",
-			})
-			.on("change", (event) => {
-				this.waveFrequency.value = event.value;
-			});
+		// swordMaterialFolder
+		// 	.addBinding(this.waveParameters, "frequency", {
+		// 		min: 0,
+		// 		max: 10,
+		// 		step: 0.1,
+		// 		label: "Wave frequency",
+		// 	})
+		// 	.on("change", (event) => {
+		// 		this.waveFrequency.value = event.value;
+		// 	});
 
-		swordMaterialFolder
-			.addBinding(this.waveParameters, "speed", {
-				min: 0,
-				max: 10,
-				step: 0.1,
-				label: "Wave speed",
-			})
-			.on("change", (event) => {
-				this.waveSpeed.value = event.value;
-			});
+		// swordMaterialFolder
+		// 	.addBinding(this.waveParameters, "speed", {
+		// 		min: 0,
+		// 		max: 10,
+		// 		step: 0.1,
+		// 		label: "Wave speed",
+		// 	})
+		// 	.on("change", (event) => {
+		// 		this.waveSpeed.value = event.value;
+		// 	});
 
-		swordMaterialFolder
-			.addBinding(this.waveParameters, "amplitude", {
-				min: 0,
-				max: 10,
-				step: 0.1,
-				label: "Wave amplitude",
-			})
-			.on("change", (event) => {
-				this.waveAmplitude.value = event.value;
-			});
+		// swordMaterialFolder
+		// 	.addBinding(this.waveParameters, "amplitude", {
+		// 		min: 0,
+		// 		max: 10,
+		// 		step: 0.1,
+		// 		label: "Wave amplitude",
+		// 	})
+		// 	.on("change", (event) => {
+		// 		this.waveAmplitude.value = event.value;
+		// 	});
 	}
 }
 
