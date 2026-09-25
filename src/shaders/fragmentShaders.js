@@ -17,16 +17,37 @@ import {
 	time,
 	uniform,
 	uv,
-    vec3,
+	vec3,
 } from "three/tsl";
 
-export const fresnel = Fn(({baseColor = color("#000000"), secondaryColor = color("#ffffff"), power = 2.0}) => {
-	// const coords = uv();
+export const fresnel = Fn(
+	({
+		baseColor = color("#000000"),
+		secondaryColor = color("#ffffff"),
+		power = 2.0,
+	}) => {
+		// const coords = uv();
 
-	const fresnelFactor = normalView.z.oneMinus().pow(power);
-	
+		const fresnelFactor = normalView.z.oneMinus().pow(power);
 
-	const color = mix(baseColor, secondaryColor, fresnelFactor);
+		const color = mix(baseColor, secondaryColor, fresnelFactor);
 
-	return color;
-});
+		return color;
+	}
+);
+
+export const smoothCircle = Fn(
+	({
+		foreground = color("#000000"),
+		background = color("#ffffff"),
+		radius = 0.3,
+		smoothness = 0.01,
+	}) => {
+		const coords = uv().sub(0.5);
+		const distance = length(coords);
+
+		const mask = distance.smoothstep(radius.sub(smoothness), radius.add(smoothness));
+
+		return mix(foreground, background, mask);
+	}
+);
