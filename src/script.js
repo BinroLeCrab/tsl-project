@@ -11,6 +11,7 @@ import { film } from 'three/examples/jsm/tsl/display/FilmNode.js'
 import interactionRaycaster from './tools/InteractionRaycaster'
 import backgroundMusic from './tools/BackgroundMusic'
 import { rgbShift } from 'three/examples/jsm/tsl/display/RGBShiftNode.js'
+import Cloud from './object/cloud'
 
 /**
  * Base
@@ -93,6 +94,9 @@ const ground = new Ground(10);
 
 const sword = new Sword(1);
 scene.add(sword)
+
+const cloud = new Cloud(80);
+scene.add(cloud);
 
 /**
  * Raycaster

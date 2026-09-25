@@ -63,6 +63,7 @@ class MagicSwordMaterial extends THREE.MeshStandardNodeMaterial {
 			positionGeometry.y.add(0.5)
 		);
 		this.side = THREE.DoubleSide;
+		this.depthWrite = false;
 
 		// this.paneFolder = settingsPane.addFolder({
 		// 	title: "Magic sword material",

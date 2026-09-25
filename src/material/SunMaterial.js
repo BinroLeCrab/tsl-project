@@ -21,7 +21,7 @@ class SunMaterial extends THREE.MeshStandardNodeMaterial {
 			smoothness: 0.1,
 		});
         this.emissiveNode = this.colorNode;
-		;
+		this.depthWrite = false;
 
 		this.transparent = true;
 	}

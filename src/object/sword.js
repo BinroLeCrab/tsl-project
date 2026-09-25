@@ -173,31 +173,26 @@ export default class Sword extends THREE.Group {
         this.isHovered = isHovered
 
         if (isHovered) {
-            console.log("La souris est au-dessus de l'épée")
+            // console.log("La souris est au-dessus de l'épée")
 
             this.SunOpacityTarget = 1;
 
             backgroundMusic.normalFilter();
             backgroundMusic.setVolume(0.5);
         } else {
-            console.log("La souris quitte l'épée")
+            // console.log("La souris quitte l'épée")
+
             this.SunOpacityTarget = 0;
+
             backgroundMusic.lowPassFilter();
             backgroundMusic.setVolume(0.4);
-
-
-            // Exemple :
-            // this.outerSword.scale.setScalar(1)
         }
     }
 
     isClicked() {
-        console.log("L'épée est cliquée")
+        // console.log("L'épée est cliquée")
 
         this.WaveTimeLife.value = 1;
-
-        // Exemple :
-        // this.rotation.y += Math.PI
     }
 
 	tick = (timer) => {

@@ -4,9 +4,11 @@ import {
 	cos,
 	dot,
 	Fn,
+	int,
 	length,
 	max,
 	mix,
+	mx_unifiednoise2d,
 	normalLocal,
 	normalView,
 	normalWorld,
@@ -17,6 +19,7 @@ import {
 	time,
 	uniform,
 	uv,
+	vec2,
 	vec3,
 } from "three/tsl";
 
@@ -51,3 +54,10 @@ export const smoothCircle = Fn(
 		return mix(foreground, background, mask);
 	}
 );
+
+export const noiseUnifiedFractal2D = Fn(() => {
+	// Implementation for 2D fractal noise
+	const position2D = uv( 0 ).mul( 50 ).add( vec2( time.mul( 0.03 ), time.mul( 0.019 ) ) );
+	const unifiedOffset2D = vec2( time.mul( .35 ), time.mul( .19 ) );
+	return mx_unifiednoise2d( int( 3 ), position2D, vec2( 1, 1 ), unifiedOffset2D, 1, 0, 1, false, 3 ) 
+});
