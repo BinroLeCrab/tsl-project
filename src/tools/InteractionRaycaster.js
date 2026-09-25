@@ -3,6 +3,7 @@ import * as THREE from 'three/webgpu'
 class InteractionRaycaster extends THREE.Raycaster {
 
     init(camera, domElement) {
+        this.enabled = false;
         this.camera = camera
         this.domElement = domElement
 
@@ -13,6 +14,14 @@ class InteractionRaycaster extends THREE.Raycaster {
         domElement.addEventListener('pointermove', this.onPointerMove)
         domElement.addEventListener('pointerleave', this.onPointerLeave)
         domElement.addEventListener('pointerdown', this.onPointerDown)
+    }
+
+    activate() {
+        this.enabled = true
+    }
+
+    deactivate() {
+        this.enabled = false
     }
 
     add(object) {
@@ -85,6 +94,9 @@ class InteractionRaycaster extends THREE.Raycaster {
     }
 
     update() {
+
+        if (!this.enabled) return;
+
         const intersectedObject = this.getIntersectedObject()
 
         if (intersectedObject !== this.hoveredObject) {

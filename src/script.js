@@ -260,7 +260,18 @@ const tick = () =>
     // renderer.render(scene, camera)
     renderPipeline.render()
 }
-
-backgroundMusic.play();
-
 renderer.setAnimationLoop(tick)
+
+/** 
+ * Start screen
+ */
+
+const startScreen = document.querySelector('.startScreen');
+const startText = document.querySelector('.startText');
+
+startScreen.addEventListener('click', () => {
+    startScreen.style.opacity = '0';
+    startScreen.style.pointerEvents = 'none';
+    interactionRaycaster.activate();
+    backgroundMusic.play();
+});

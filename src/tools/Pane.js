@@ -2,7 +2,7 @@ import { Pane } from "tweakpane";
 
 const settingsPane = new Pane({
 	title: "Settings",
-	expanded: true,
+	expanded: false,
 });
 
 export default settingsPane;

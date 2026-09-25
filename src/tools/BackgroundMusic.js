@@ -64,9 +64,9 @@ class BackgroundMusic {
 
     lowPassFilter() {
         if (!this.filtersReady) return;
-        this.bass.gain.value = 4;
-        this.mids.gain.value = -15;
-        this.treble.gain.value = -15;
+        this.bass.gain.value = 8;
+        this.mids.gain.value = -20;
+        this.treble.gain.value = -20;
     }
 
     highPassFilter() {
