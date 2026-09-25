@@ -10,6 +10,7 @@ import settingsPane from './tools/Pane'
 import { film } from 'three/examples/jsm/tsl/display/FilmNode.js'
 import interactionRaycaster from './tools/InteractionRaycaster'
 import backgroundMusic from './tools/BackgroundMusic'
+import { rgbShift } from 'three/examples/jsm/tsl/display/RGBShiftNode.js'
 
 /**
  * Base
@@ -177,6 +178,41 @@ bloomFolder.addBinding(bloomSettings, "threshold", {
     bloomPass.threshold.value = event.value;
 });
 
+// rgb shift pass
+
+const rgbShiftSettings = {
+    amount: 0.002,
+    angle: 0.0,
+};
+
+const rgbShiftAmount = uniform(rgbShiftSettings.amount);
+const rgbShiftAngle = uniform(rgbShiftSettings.angle);
+
+const shiftPass = rgbShift(bloomOutput, rgbShiftAmount, rgbShiftAngle);
+
+const rgbShiftFolder = settingsPane.addFolder({
+    title: "RGB Shift",
+    expanded: false,
+});
+
+rgbShiftFolder.addBinding(rgbShiftSettings, "amount", {
+    min: 0,
+    max: 0.1,
+    step: 0.001,
+    label: "Amount",
+}).on("change", (event) => {
+    rgbShiftAmount.value = event.value;
+});
+
+rgbShiftFolder.addBinding(rgbShiftSettings, "angle", {
+    min: -Math.PI,
+    max: Math.PI,
+    step: 0.01,
+    label: "Angle",
+}).on("change", (event) => {
+    rgbShiftAngle.value = event.value;
+});
+
 // Film pass
 
 const filmSettings = {
@@ -185,7 +221,7 @@ const filmSettings = {
 
 const filmIntensity = uniform(filmSettings.intensity);
 
-const filmPass = film(bloomOutput, filmIntensity);
+const filmPass = film(shiftPass, filmIntensity);
 
 const filmFolder = settingsPane.addFolder({
     title: "Film",
@@ -226,6 +262,5 @@ const tick = () =>
 }
 
 backgroundMusic.play();
-backgroundMusic.lowPassFilter();
 
 renderer.setAnimationLoop(tick)
