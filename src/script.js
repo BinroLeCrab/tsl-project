@@ -9,6 +9,7 @@ import { bloom } from 'three/examples/jsm/tsl/display/BloomNode.js'
 import settingsPane from './tools/Pane'
 import { film } from 'three/examples/jsm/tsl/display/FilmNode.js'
 import interactionRaycaster from './tools/InteractionRaycaster'
+import backgroundMusic from './tools/BackgroundMusic'
 
 /**
  * Base
@@ -63,7 +64,7 @@ window.addEventListener('resize', () =>
 const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100)
 camera.position.x = 0
 camera.position.y = 1
-camera.position.z = 5
+camera.position.z = 4
 scene.add(camera)
 
 /**
@@ -224,6 +225,7 @@ const tick = () =>
     renderPipeline.render()
 }
 
-renderer.setAnimationLoop(tick)
+backgroundMusic.play();
+backgroundMusic.lowPassFilter();
 
-console.log(renderer.backend)
+renderer.setAnimationLoop(tick)

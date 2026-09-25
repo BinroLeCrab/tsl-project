@@ -5,6 +5,7 @@ import baseNodeMaterial from "../material/BaseNodeMaterial";
 import settingsPane from "../tools/Pane";
 import magicSwordMaterial from "../material/MagicSwordMaterial";
 import { uniform } from "three/tsl";
+import backgroundMusic from "../tools/BackgroundMusic";
 
 const loader = new GLTFLoader();
 
@@ -17,6 +18,23 @@ export default class Sword extends THREE.Group {
 
 		this.scale.set(size, size, size);
 
+        this.setupSwordGroup();
+
+		this.position.set(0, 2, 0);
+
+        this.initialPosition = this.position.clone();
+        this.animation = {
+            speed: 1,
+            amplitude: 0.1,
+        }
+
+        this.swordFolder = settingsPane.addFolder({
+            title: "Sword",
+        });
+
+	}
+
+    setupSwordGroup() {
         this.swordGroup = new THREE.Group();
         this.add(this.swordGroup);
 
@@ -41,21 +59,10 @@ export default class Sword extends THREE.Group {
             this.addOuterSword();
 		});
 
-		this.position.set(0, 2, 0);
-        this.rotateZ(Math.PI * 0.67);
-        this.rotateX(Math.PI * 0.05);
+        this.swordGroup.rotateZ(Math.PI * 0.67);
+        this.swordGroup.rotateX(Math.PI * 0.05);
 
-        this.initialPosition = this.position.clone();
-        this.animation = {
-            speed: 1,
-            amplitude: 0.1,
-        }
-
-        this.swordFolder = settingsPane.addFolder({
-            title: "Sword",
-        });
-
-	}
+    }
 
     addOuterSword() {
         this.outerSword = this.baseSword.clone();
@@ -106,8 +113,15 @@ export default class Sword extends THREE.Group {
 
             // Exemple :
             // this.outerSword.scale.setScalar(1.1)
+
+            backgroundMusic.normalFilter();
+            backgroundMusic.setVolume(0.5);
         } else {
             console.log("La souris quitte l'épée")
+            
+            backgroundMusic.lowPassFilter();
+            backgroundMusic.setVolume(0.4);
+
 
             // Exemple :
             // this.outerSword.scale.setScalar(1)
@@ -128,7 +142,8 @@ export default class Sword extends THREE.Group {
         const delta = timer.getDelta();
 
 		this.swordGroup.position.y = Math.sin(timer.getElapsed() * this.animation.speed) * this.animation.amplitude;
-        this.swordGroup.rotation.y += this.animation.speed * 0.01;
+        this.baseSword.rotation.y += this.animation.speed * 0.01;
+        this.outerSword.rotation.y += this.animation.speed * 0.01;
 
         if (this.WaveTimeLife.value > 0) {
             this.WaveTimeLife.value -= delta * 0.5; 

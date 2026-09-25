@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-basic-ssl": "^2.3.0",
+    "howler": "^2.2.4",
     "three": "^0.185.1",
     "tweakpane": "^4.0.5"
   }
