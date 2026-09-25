@@ -140,31 +140,31 @@ export default class Sword extends THREE.Group {
         this.outerSword.scale.set(1.5, 1, 1.65);
         this.swordGroup.add(this.outerSword);
 
-        this.outerSwordFolder = this.swordFolder.addFolder({
-            title: "outerSword",
-            expanded: false,
-        });
+        // this.outerSwordFolder = this.swordFolder.addFolder({
+        //     title: "outerSword",
+        //     expanded: false,
+        // });
 
-        this.outerSwordFolder.addBinding(this.outerSword.scale, "x", {
-            min: 1,
-            max: 2,
-            step: 0.01,
-            label: "Scale X",
-        });
+        // this.outerSwordFolder.addBinding(this.outerSword.scale, "x", {
+        //     min: 1,
+        //     max: 2,
+        //     step: 0.01,
+        //     label: "Scale X",
+        // });
 
-        this.outerSwordFolder.addBinding(this.outerSword.scale, "y", {
-            min: 1,
-            max: 2,
-            step: 0.01,
-            label: "Scale Y",
-        });
+        // this.outerSwordFolder.addBinding(this.outerSword.scale, "y", {
+        //     min: 1,
+        //     max: 2,
+        //     step: 0.01,
+        //     label: "Scale Y",
+        // });
 
-        this.outerSwordFolder.addBinding(this.outerSword.scale, "z", {
-            min: 1,
-            max: 2,
-            step: 0.01,
-            label: "Scale Z",
-        });
+        // this.outerSwordFolder.addBinding(this.outerSword.scale, "z", {
+        //     min: 1,
+        //     max: 2,
+        //     step: 0.01,
+        //     label: "Scale Z",
+        // });
     }
 
     isHover(isHovered, event) {

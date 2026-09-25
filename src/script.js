@@ -12,6 +12,7 @@ import interactionRaycaster from './tools/InteractionRaycaster'
 import backgroundMusic from './tools/BackgroundMusic'
 import { rgbShift } from 'three/examples/jsm/tsl/display/RGBShiftNode.js'
 import Cloud from './object/cloud'
+import { HDRLoader } from 'three/examples/jsm/Addons.js'
 
 /**
  * Base
@@ -23,9 +24,9 @@ const canvas = document.querySelector('canvas.threejs')
 const scene = new THREE.Scene()
 
 // Environement map
-const rgbeLoader = new RGBELoader()
+const hdrLoader = new HDRLoader()
 
-rgbeLoader.load('./sky_environnement.hdr', (environmentMap) => {
+hdrLoader.load('./sky_environnement.hdr', (environmentMap) => {
     environmentMap.mapping = THREE.EquirectangularReflectionMapping
 
     scene.environment = environmentMap
